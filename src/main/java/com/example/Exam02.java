@@ -10,6 +10,8 @@ public class Exam02 {
         String host = "localhost";
         int port = 1234;
 
+        // Exam02파일을 터미널에서 따로 실행할 때 host와 port를 주면 기존의 host와 port는 바뀜.
+        // Ex) java Exam02.java localhost 8080
         if (args.length > 0) {
             host = args[0];
         }
