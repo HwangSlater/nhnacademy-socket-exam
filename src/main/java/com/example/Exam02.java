@@ -12,10 +12,13 @@ public class Exam02 {
 
         // Exam02파일을 터미널에서 따로 실행할 때 host와 port를 주면 기존의 host와 port는 바뀜.
         // Ex) java Exam02.java localhost 8080
+
+        // 호스트만 입력했을 경우를 위해
         if (args.length > 0) {
             host = args[0];
         }
 
+        // 포트까지 입력한 경우
         try {
             if (args.length > 1) {
                 port = Integer.parseInt(args[1]);
