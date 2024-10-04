@@ -4,24 +4,23 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-class BroadCastingServer {
+class Server {
     int port;
     List<ClientHandler> clientList = Collections.synchronizedList(new LinkedList<>());
-    Map<String, ClientHandler> idList = new HashMap<>();
+    ConcurrentHashMap<String, ClientHandler> idMap = new ConcurrentHashMap<>();
 
-    BroadCastingServer(int port) {
+    Server(int port) {
         this.port = port;
     }
 
     public void start() {
-        try (ServerSocket broadCastingServer = new ServerSocket(port)) {
+        try (ServerSocket server = new ServerSocket(port)) {
             while (true) {
-                Socket socket = broadCastingServer.accept();
+                Socket socket = server.accept();
                 System.out.println("Client[" + socket.getInetAddress().getHostAddress() +
                         ":" + socket.getPort() + "]가 연결되었습니다.");
 
@@ -41,6 +40,10 @@ class BroadCastingServer {
                 client.receivedMessage(message);
             }
         }
+    }
+
+    public void sendWhisper(String message, ClientHandler clientHandler) {
+        clientHandler.receivedMessage(message);
     }
 
     public void removeClient(ClientHandler clientHandler) {
